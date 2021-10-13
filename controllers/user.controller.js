@@ -3,6 +3,8 @@ const passport = require('passport');
 const User = mongoose.model('User');
 const Bus = mongoose.model('Bus');
 const _ = require('lodash');
+const bodyparser=require('body-parser');
+
 
 module.exports.register=(req, res, next)=>{
     var user = new User();
@@ -31,7 +33,7 @@ module.exports.postbus=(req, res, next)=>{
     bus.source = req.body.source;
     bus.dest = req.body.dest;
     bus.date = req.body.date;
-    bus.time = req.body.time
+    bus.tim = req.body.time
     bus.save((err, doc)=>{
         if (!err){
             res.send(doc);
@@ -47,21 +49,32 @@ module.exports.postbus=(req, res, next)=>{
     });
 }
 
-module.exports.getbus = (req, res, next) => {
-Bus.find({_source: req._source, _dest: req._dest, _date: req._date, _time: req._time}, function(err, doc){
-    if (err)
-    res.status(404).json({ status: false, message:'user record not found'});
-    else
-        res.status(200).json({status: true, bus:doc[20]});
-});
-    // (err, bus)=>{
-    // if(err)
-    //     return err;
-    // else
-    //     return res.status(200).json({ status: true, bus: _.pick(bus, ['source','dest','title','time']) });
+module.exports.getbus = async (req, res, next) => {
+   // console.log(dat);
+  // console.log(typeof(Number(req.query.time)))
+  console.log(req.body);
+    try{
+    var out = await Bus.find({"source":req.body.source , "dest":req.body.destination , "tim": req.body.time})
+        console.log(out)
+        res.send(out)
+    }
+    catch(err)
+    {
+        res.send(err)
+    }
+    
 
-
+// Bus.findOne(dat,
+//     function (err, bus){
+//     if (err)
+//     res.status(404).json({ status: false, message:'bus not found'});
+//     else
+//         res.status(200).json({status: true, bus
+//     });
+    
+// });
 }
+
 
 module.exports.authenticate = (req, res, next) => {
     passport.authenticate('local', (err, user, info)=>{ 

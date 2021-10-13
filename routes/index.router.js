@@ -7,5 +7,5 @@ router.post('/register', ctrlUser.register);
 router.post('/authenticate', ctrlUser.authenticate);
 router.get('/userProfile',jwtHelper.verifyJwtToken, ctrlUser.userProfile);
 router.post('/postbus', ctrlUser.postbus);
-router.get('/getbus', ctrlUser.getbus);
+router.post('/getbus', ctrlUser.getbus);
 module.exports=router;

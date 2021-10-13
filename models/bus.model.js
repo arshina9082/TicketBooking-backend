@@ -11,7 +11,7 @@ var busSchema  =  new mongoose.Schema({
     dest:{
         type: String
     },
-    time:{
+    tim:{
         type: Number
     },
     date:{

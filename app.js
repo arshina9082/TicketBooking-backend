@@ -23,6 +23,9 @@ app.use(cors());
 app.use(passport.initialize());
 
 app.use('/api', rtsIndex);
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
 app.use((err, req, res, next)=>{
     if (err.name==='ValidationError'){
